@@ -1,12 +1,13 @@
 <template>
-    <div>
-        THis is home
+    <div class="mt-2">
+        <ProductList></ProductList>
     </div>
 </template>
 
 <script>
+import ProductList from '../components/ProductList'
     export default {
-
+        components : {ProductList}
     }
 </script>
 

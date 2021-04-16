@@ -9,7 +9,10 @@
 </head>
 <body>
     <div id="app">
-        @yield('app_content')
+         <my-header></my-header>
+         <div class="container">
+            @yield('app_content')
+         </div>
     </div>
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

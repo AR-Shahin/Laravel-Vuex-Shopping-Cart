@@ -5,15 +5,12 @@ window.Vue = require('vue').default;
 
 import router from './router'
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import MyHeader from './components/NavBar'
+
 
 const app = new Vue({
     router,
     el: '#app',
+    components:{MyHeader}
 });
