@@ -27,7 +27,10 @@
 <script>
 import MiniCart from './MiniCart.vue'
     export default {
-        components : {MiniCart}
+        components : {MiniCart},
+        computed : {
+            
+        }
     }
 </script>
 

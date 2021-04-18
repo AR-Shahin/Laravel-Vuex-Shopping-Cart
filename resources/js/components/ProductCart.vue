@@ -2,17 +2,17 @@
     <div>
         <div class="col-12 col-md-3 mb-4">
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="https://via.placeholder.com/300x250.png" alt="Card image cap">
+                <img class="card-img-top" :src="product.image" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Demo Product 1</h5>
-                    <p class="card-text">Some quick example text</p>
+                    <router-link :to="{name:'product',params :{id:product.id}}"><h5 class="card-title">{{ product.name }}</h5></router-link>
+                    <p class="card-text">{{ product.des }}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-between px-2">
                     <div>
-                        Price : $100
+                        Price : ${{ product.price }}
                     </div>
                     <div>
-                        <a href="" class="btn btn-sm btn-primary">Add To Cart</a>
+                        <a href="" class="btn btn-sm btn-primary" @click.prevent="addToCart">Add To Cart</a>
                     </div>
                 </div>
         </div>
@@ -22,7 +22,15 @@
 
 <script>
     export default {
-
+        props : ['product'],
+        methods : {
+            addToCart(){
+                this.$store.dispatch('addToCart',{
+                    product : this.product,
+                    quantity : 1
+                })
+            }
+    }
     }
 </script>
 

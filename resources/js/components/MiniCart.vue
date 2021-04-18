@@ -2,16 +2,16 @@
     <div>
         <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    0 Cart
+    {{ count }} Cart
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"     style="min-width:320px; right:0; left:auto">
-      <div v-for="i in 5" :key="i">
+      <div v-for="item in cart" :key="item.product.id">
         <div class="dropdowm-item">
         <div class="px-2 d-flex justify-content-between">
         <div>
-          <strong>Vegitable</strong>
+          <strong>{{ item.product.name }}</strong>
           <br />
-          2 x $2
+          {{ item.quantity }} x ${{ item.product.price }}
         </div>
         <div>
           <a
@@ -25,7 +25,7 @@
       </div>
       <!-- total -->
        <div class="d-flex justify-content-between px-2">
-      <span>Total: $105</span>
+      <span>Total: ${{ total }}</span>
       <a href="#" class="btn btn-sm btn-danger">Clear Cart</a>
     </div>
   </div>
@@ -35,7 +35,20 @@
 
 <script>
     export default {
-
+        mounted (){
+           this.$store.dispatch('getCartItems')
+        },
+        computed : {
+            cart(){
+                return this.$store.state.cart;
+            },
+            count(){
+               return this.$store.getters.cartItemCount
+            },
+            total(){
+                return this.$store.getters.totalCartAmount
+            }
+        }
     }
 </script>
 
