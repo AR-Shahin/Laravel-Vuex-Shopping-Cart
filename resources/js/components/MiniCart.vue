@@ -16,7 +16,7 @@
         <div>
           <a
             href="#"
-            class="badge badge-danger"
+            class="badge badge-danger" @click="removeFromCart(item.product)"
           >Remove</a>
         </div>
       </div>
@@ -26,7 +26,7 @@
       <!-- total -->
        <div class="d-flex justify-content-between px-2">
       <span>Total: ${{ total }}</span>
-      <a href="#" class="btn btn-sm btn-danger">Clear Cart</a>
+      <a href="#" class="btn btn-sm btn-danger" @click="clearCart">Clear Cart</a>
     </div>
   </div>
 </div>
@@ -47,6 +47,14 @@
             },
             total(){
                 return this.$store.getters.totalCartAmount
+            }
+        },
+        methods: {
+            removeFromCart(product){
+                this.$store.dispatch('removeFromCart',product)
+            },
+            clearCart(){
+                this.$store.dispatch('clearCart')
             }
         }
     }

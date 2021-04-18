@@ -1894,6 +1894,14 @@ __webpack_require__.r(__webpack_exports__);
     total: function total() {
       return this.$store.getters.totalCartAmount;
     }
+  },
+  methods: {
+    removeFromCart: function removeFromCart(product) {
+      this.$store.dispatch('removeFromCart', product);
+    },
+    clearCart: function clearCart() {
+      this.$store.dispatch('clearCart');
+    }
   }
 });
 
@@ -2258,7 +2266,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getProducts": () => (/* binding */ getProducts),
 /* harmony export */   "getSingleProduct": () => (/* binding */ getSingleProduct),
 /* harmony export */   "addToCart": () => (/* binding */ addToCart),
-/* harmony export */   "getCartItems": () => (/* binding */ getCartItems)
+/* harmony export */   "getCartItems": () => (/* binding */ getCartItems),
+/* harmony export */   "removeFromCart": () => (/* binding */ removeFromCart),
+/* harmony export */   "clearCart": () => (/* binding */ clearCart)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -2292,6 +2302,20 @@ var getCartItems = function getCartItems(_ref5) {
   var commit = _ref5.commit;
   axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:8000/api/cart').then(function (res) {
     commit('GET_CART_ITEMS', res.data);
+  });
+};
+var removeFromCart = function removeFromCart(_ref6, payload) {
+  var commit = _ref6.commit;
+  commit('REMOVE_FROM_CART', payload);
+  axios__WEBPACK_IMPORTED_MODULE_0___default().delete('http://127.0.0.1:8000/api/cart/' + payload.id).then(function (res) {
+    console.log('deleted');
+  });
+};
+var clearCart = function clearCart(_ref7) {
+  var commit = _ref7.commit;
+  commit('CLEAR_CART');
+  axios__WEBPACK_IMPORTED_MODULE_0___default().delete('http://127.0.0.1:8000/api/cart/').then(function (res) {
+    console.log('deleted');
   });
 };
 
@@ -2367,7 +2391,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "SET_PRODUCTS": () => (/* binding */ SET_PRODUCTS),
 /* harmony export */   "SET_SINGLE_PRODUCT": () => (/* binding */ SET_SINGLE_PRODUCT),
 /* harmony export */   "ADD_TO_CART": () => (/* binding */ ADD_TO_CART),
-/* harmony export */   "GET_CART_ITEMS": () => (/* binding */ GET_CART_ITEMS)
+/* harmony export */   "GET_CART_ITEMS": () => (/* binding */ GET_CART_ITEMS),
+/* harmony export */   "REMOVE_FROM_CART": () => (/* binding */ REMOVE_FROM_CART),
+/* harmony export */   "CLEAR_CART": () => (/* binding */ CLEAR_CART)
 /* harmony export */ });
 var SET_PRODUCTS = function SET_PRODUCTS(state, products) {
   state.products = products;
@@ -2394,6 +2420,14 @@ var ADD_TO_CART = function ADD_TO_CART(state, _ref) {
 };
 var GET_CART_ITEMS = function GET_CART_ITEMS(state, items) {
   state.cart = items;
+};
+var REMOVE_FROM_CART = function REMOVE_FROM_CART(state, data) {
+  state.cart = state.cart.filter(function (item) {
+    return item.product.id != data.id;
+  });
+};
+var CLEAR_CART = function CLEAR_CART(state) {
+  state.cart = [];
 };
 
 /***/ }),
@@ -38485,7 +38519,21 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(0, true)
+                    _c("div", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "badge badge-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.removeFromCart(item.product)
+                            }
+                          }
+                        },
+                        [_vm._v("Remove")]
+                      )
+                    ])
                   ]
                 ),
                 _vm._v(" "),
@@ -38499,7 +38547,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "a",
-              { staticClass: "btn btn-sm btn-danger", attrs: { href: "#" } },
+              {
+                staticClass: "btn btn-sm btn-danger",
+                attrs: { href: "#" },
+                on: { click: _vm.clearCart }
+              },
               [_vm._v("Clear Cart")]
             )
           ])
@@ -38509,18 +38561,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("a", { staticClass: "badge badge-danger", attrs: { href: "#" } }, [
-        _vm._v("Remove")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

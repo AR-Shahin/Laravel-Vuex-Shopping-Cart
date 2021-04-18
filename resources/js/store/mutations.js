@@ -22,3 +22,13 @@ export const ADD_TO_CART = (state,{product,quantity}) => {
 export const GET_CART_ITEMS = (state,items) => {
     state.cart = items
 }
+
+export const REMOVE_FROM_CART = (state,data) => {
+    state.cart = state.cart.filter((item) => {
+        return item.product.id != data.id
+    })
+}
+export const CLEAR_CART = (state) => {
+    state.cart = []
+}
+
