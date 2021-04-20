@@ -8,15 +8,18 @@
 
 <script>
 import ProductCart from './ProductCart'
+import {mapActions,mapState} from 'vuex'
     export default {
         components : {ProductCart},
         mounted(){
             this.$store.dispatch('getProducts')
+          
         },
         computed : {
             products(){
-                return this.$store.state.products
-            }
+                return this.products
+            },
+            ...mapState(['products'])
         }
     }
 </script>

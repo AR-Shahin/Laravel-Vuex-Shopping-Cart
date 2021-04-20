@@ -2,7 +2,7 @@
     <div>
         <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    {{ count }} Cart
+    {{ cartItemCount }} Cart
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"     style="min-width:320px; right:0; left:auto">
       <div v-for="item in cart" :key="item.product.id">
@@ -25,7 +25,7 @@
       </div>
       <!-- total -->
        <div class="d-flex justify-content-between px-2">
-      <span>Total: ${{ total }}</span>
+      <span>Total: ${{ totalCartAmount }}</span>
       <a href="#" class="btn btn-sm btn-danger" @click="clearCart">Clear Cart</a>
     </div>
   </div>
@@ -34,19 +34,15 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex';
     export default {
         mounted (){
            this.$store.dispatch('getCartItems')
         },
         computed : {
+            ...mapGetters(['cartItemCount','totalCartAmount']),
             cart(){
                 return this.$store.state.cart;
-            },
-            count(){
-               return this.$store.getters.cartItemCount
-            },
-            total(){
-                return this.$store.getters.totalCartAmount
             }
         },
         methods: {

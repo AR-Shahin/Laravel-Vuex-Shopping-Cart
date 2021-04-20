@@ -1845,6 +1845,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1880,21 +1887,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     this.$store.dispatch('getCartItems');
   },
-  computed: {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['cartItemCount', 'totalCartAmount'])), {}, {
     cart: function cart() {
       return this.$store.state.cart;
-    },
-    count: function count() {
-      return this.$store.getters.cartItemCount;
-    },
-    total: function total() {
-      return this.$store.getters.totalCartAmount;
     }
-  },
+  }),
   methods: {
     removeFromCart: function removeFromCart(product) {
       this.$store.dispatch('removeFromCart', product);
@@ -2014,6 +2016,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _ProductCart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductCart */ "./resources/js/components/ProductCart.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2023,6 +2032,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     ProductCart: _ProductCart__WEBPACK_IMPORTED_MODULE_0__.default
@@ -2030,11 +2040,11 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.$store.dispatch('getProducts');
   },
-  computed: {
+  computed: _objectSpread({
     products: function products() {
-      return this.$store.state.products;
+      return this.products;
     }
-  }
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)(['products']))
 });
 
 /***/ }),
@@ -2118,6 +2128,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['id'],
+  data: function data() {
+    return {
+      quantity: 1
+    };
+  },
   mounted: function mounted() {
     this.$store.dispatch('getSingleProduct', this.id);
   },
@@ -2130,7 +2145,7 @@ __webpack_require__.r(__webpack_exports__);
     addToCart: function addToCart() {
       this.$store.dispatch('addToCart', {
         product: this.product,
-        quantity: 1
+        quantity: this.quantity
       });
     }
   }
@@ -38488,7 +38503,7 @@ var render = function() {
             "aria-expanded": "false"
           }
         },
-        [_vm._v("\n    " + _vm._s(_vm.count) + " Cart\n  ")]
+        [_vm._v("\n    " + _vm._s(_vm.cartItemCount) + " Cart\n  ")]
       ),
       _vm._v(" "),
       _c(
@@ -38543,7 +38558,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("div", { staticClass: "d-flex justify-content-between px-2" }, [
-            _c("span", [_vm._v("Total: $" + _vm._s(_vm.total))]),
+            _c("span", [_vm._v("Total: $" + _vm._s(_vm.totalCartAmount))]),
             _vm._v(" "),
             _c(
               "a",
@@ -38882,8 +38897,25 @@ var render = function() {
       _c("h3", [_vm._v("$" + _vm._s(_vm.product.price))]),
       _vm._v(" "),
       _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.quantity,
+            expression: "quantity"
+          }
+        ],
         staticClass: "text-center col-1 mr-2 p-1",
-        attrs: { type: "text" }
+        attrs: { type: "text" },
+        domProps: { value: _vm.quantity },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.quantity = $event.target.value
+          }
+        }
       }),
       _vm._v(" "),
       _c(
