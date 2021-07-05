@@ -15,21 +15,24 @@
                     <li class="nav-item">
                         <router-link :to="{name: 'about'}" class="nav-link">Shop</router-link>
                     </li>
+
                     </ul>
                     <mini-cart></mini-cart>
 
                 </div>
         </div>
         </nav>
+<Notification/>
     </div>
 </template>
 
 <script>
 import MiniCart from './MiniCart.vue'
+import Notification from './Notifaction.vue'
     export default {
-        components : {MiniCart},
+        components : {MiniCart,Notification},
         computed : {
-            
+
         }
     }
 </script>

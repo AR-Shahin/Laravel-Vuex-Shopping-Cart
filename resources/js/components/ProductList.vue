@@ -1,5 +1,6 @@
 <template>
     <div>
+
          <div class="row justify-content-center">
              <ProductCart v-for="product in products" :key="product.id" :product="product"></ProductCart>
          </div>
@@ -13,7 +14,7 @@ import {mapActions,mapState} from 'vuex'
         components : {ProductCart},
         mounted(){
             this.$store.dispatch('getProducts')
-          
+
         },
         computed : {
             products(){

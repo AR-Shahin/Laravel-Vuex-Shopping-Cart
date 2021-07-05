@@ -2,5 +2,7 @@ export default {
     products : [],
     title : 'hii',
     product : null,
-    cart : []
+    cart : [],
+    test : {},
+    notifications: ['k']
 }
